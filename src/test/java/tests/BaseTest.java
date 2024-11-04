@@ -14,7 +14,7 @@ public class BaseTest {
     public void setupMethod(){
         driver = new ChromeDriver();
         softAssert = new SoftAssert();
-        System.out.println("Before method");
+        driver.get("https://demowebshop.tricentis.com/");
     }
 
 

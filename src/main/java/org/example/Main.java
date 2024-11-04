@@ -1,12 +1,10 @@
 package org.example;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.asserts.SoftAssert;
 import utils.Constants;
 
@@ -36,6 +34,7 @@ public class Main {
         //WebdriverManager
         //WebDriverManager.chromedriver().setup(); //pre 4.6.0 selenium verzije
         //WebDriverManager.firefoxdriver().browserVersion("").setup();
+        //driver = new ChromeDriver();
         driver = new ChromeDriver();
 
         driver.manage().window().maximize();
@@ -59,7 +58,7 @@ public class Main {
 //        driver.findElement(By.className("fa fa-2x fa-sign-in")); primeri dohvatanja elementa preko klase
 //        driver.findElement(By.cssSelector(".fa.fa-2x")); primeri dohvatanja elementa preko klase
 
-        String expectedText = "You logged into a secure area!!";
+        String expectedText = "You logged into a secure area!";
 
         WebElement loggedInUserText = driver.findElement(By.cssSelector(".flash.success"));
         String actualText = loggedInUserText.getText();
@@ -71,7 +70,14 @@ public class Main {
         String actualRegexText = actualRegexArray[0];
 
 
-        String expectedColor = "rgba(93, 164, 35, 0)";
+        String expectedColor = null;
+
+        if (driver instanceof ChromeDriver){
+            expectedColor = "rgba(93, 164, 35, 1)";
+        }else if (driver instanceof FirefoxDriver){
+            expectedColor = "rgb(93, 164, 35)";
+        }
+
         String actualColor = loggedInUserText.getCssValue("background-color");
 
         System.out.println(actualColor);
