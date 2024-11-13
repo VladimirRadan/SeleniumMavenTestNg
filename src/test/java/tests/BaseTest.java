@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
@@ -16,17 +18,20 @@ public class BaseTest {
 
     protected WebDriver driver;
     protected SoftAssert softAssert;
+    protected WebDriverWait wait;
 
     @BeforeMethod
     public void setupMethod(){
         driver = new ChromeDriver();
         softAssert = new SoftAssert();
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         //driver.get("https://demowebshop.tricentis.com/");
-        //driver.manage().window().maximize();
+        driver.manage().window().maximize();
     }
 
     protected WebElement getElement(By locator){
-        return driver.findElement(locator);
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
     protected void typeIn(By locator, String text){
@@ -44,7 +49,6 @@ public class BaseTest {
         WebElement element = getElement(locator);
         new Actions(driver)
                 .moveToElement(element)
-                .pause(wait)
                 .build()
                 .perform();
     }
@@ -60,7 +64,7 @@ public class BaseTest {
     }
 
     protected void clickOnElement(By locator){
-        getElement(locator).click();
+        wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
 

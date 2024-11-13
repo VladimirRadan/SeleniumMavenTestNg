@@ -26,9 +26,9 @@ public class BasketTest extends BaseTest {
 
 
     @Test
-    public void basketTest() throws InterruptedException {
+    public void basketTest(){
 
-        Thread.sleep(2000);
+
         hover(headerMenuComputers, 1);
         hoverAndClick(headerMenuNotebooks, 2000);
 
