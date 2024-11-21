@@ -2,13 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-public class RegisterPage {
-
-    private WebDriver driver;
-
-    public RegisterPage(WebDriver driver) {
-        this.driver = driver;
-    }
+public class RegisterPage extends BasePage{
 
     //relativni
     private By registerLink = By.cssSelector(".header-links>ul>li>a[class='ico-register']");
@@ -22,6 +16,10 @@ public class RegisterPage {
 
     private By welcomePageText = By.cssSelector(".page-body .result");
 
+    public RegisterPage(WebDriver driver) {
+        super(driver);
+    }
+
 
     //apsolutni
     ///html/body/div[4]/div[1]/div[4]/div[2]/form/div/div[2]/div[2]/div[2]/div[2]/input
@@ -32,16 +30,15 @@ public class RegisterPage {
         driver.findElement(gender).click();
         driver.findElement(firstNameField).sendKeys("John");
         driver.findElement(lastNameField).sendKeys("Smith");
-        driver.findElement(emailNameField).sendKeys("randomEmail1332123213@email.com");
+        driver.findElement(emailNameField).sendKeys(System.currentTimeMillis() + "@email.com");
         driver.findElement(passwordField).sendKeys("Test1234");
         driver.findElement(confirmPasswordField).sendKeys("Test1234");
         driver.findElement(registerButton).click();
     }
 
     public boolean isUserRegistered(){
-        String actualText = driver.findElement(welcomePageText).getText();
-        String expectedText = "Your registration completed";
-        return expectedText.equals(actualText.trim());
+        String expectedText = "Your registration completed!";
+        return matchesExpectedText(welcomePageText, expectedText);
     }
 
 
