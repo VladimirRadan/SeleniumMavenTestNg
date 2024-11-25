@@ -6,10 +6,13 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.Utils;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
+
+import static utils.Utils.dotEnv;
 
 public class BasePage {
 
@@ -17,23 +20,25 @@ public class BasePage {
     private WebDriverWait wait;
 
     private static final Logger log = LogManager.getLogger(BasePage.class.getName());
+    private long waitTime = Long.parseLong(dotEnv().get("EXPLICIT_WAIT_TIME"));
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(waitTime));
     }
 
     protected WebElement getElement(By locator){
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-    protected void typeIn(By locator, String text){
+    protected BasePage typeIn(By locator, String text){
         WebElement element = getElement(locator);
         //element.clear();
         element.sendKeys(text);
+        return this;
     }
 
-    protected void clickOnElement(By locator){
+    protected BasePage clickOnElement(By locator){
         JavascriptExecutor js = (JavascriptExecutor) driver;
         try {
             wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
@@ -49,6 +54,7 @@ public class BasePage {
             WebElement element = getElement(locator);
             js.executeScript("arguments[0].click();", element);
         }
+        return this;
     }
 
     protected boolean matchesExpectedText(By locator, String expectedText){

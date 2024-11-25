@@ -4,13 +4,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import utils.Utils;
 
 import java.time.Duration;
 
 public class DriverManager {
 
+    private static String browser = Utils.dotEnv().get("BROWSER");
 
-    public static WebDriver setDriver(String browser){
+    public static WebDriver setDriver(){
         WebDriver driver = null;
 
         if (browser.equalsIgnoreCase("chrome")){

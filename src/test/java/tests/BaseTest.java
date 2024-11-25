@@ -1,6 +1,7 @@
 package tests;
 
 import core.DriverManager;
+import core.Environment;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -12,8 +13,9 @@ public class BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void initialSetup(){
-        driver = DriverManager.setDriver("chrome");
-        driver.get("https://demowebshop.tricentis.com/");
+        driver = DriverManager.setDriver();
+        //driver.get("https://demowebshop.tricentis.com/");
+        new Environment(driver).openBrowser();
     }
 
     @AfterMethod(alwaysRun = true)

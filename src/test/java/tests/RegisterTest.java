@@ -26,8 +26,9 @@ public class RegisterTest extends BaseTest{
 
     @Test(description = "Register user happy path; Expected result: User is successfully registered")
     public void registerUserTestFail(){
-        registerPage.registerUser();
-        Assert.assertTrue(registerPage.isUserRegistered());
+//        registerPage.registerUser();
+//        Assert.assertTrue(registerPage.isUserRegistered());
+        Assert.assertTrue(false);
     }
 
 
