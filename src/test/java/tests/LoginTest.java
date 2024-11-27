@@ -5,6 +5,7 @@ import listeners.RetryAnalyzer;
 import models.LoginUser;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import utils.Utils;
@@ -15,9 +16,9 @@ public class LoginTest extends BaseTest {
 
     LoginPage loginPage;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void loginSetup() {
-        loginPage = new LoginPage(driver);
+        loginPage = new LoginPage(driver.get());
     }
 
     @Test(retryAnalyzer = RetryAnalyzer.class)
@@ -44,5 +45,14 @@ public class LoginTest extends BaseTest {
             Assert.assertTrue(loginPage.isErrorMessagePresent());
         }
     }
+
+    @Test(groups = {"smoke", "regression"})
+    @Parameters({"username", "password"})
+    public void loginUserFromTestNgXmlTest(String username, String password){
+        loginPage.goToLoginForm()
+                .loginUser(username, password);
+        Assert.assertTrue(false);
+    }
+
 
 }

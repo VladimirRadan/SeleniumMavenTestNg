@@ -5,28 +5,33 @@ import core.Environment;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 
 public class BaseTest {
 
 
-    protected WebDriver driver;
+    //protected WebDriver driver;
+
+    protected static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     @BeforeMethod(alwaysRun = true)
-    public void initialSetup(){
-        driver = DriverManager.setDriver();
+    @Parameters("browser")
+    public void initialSetup(String browser){
+        driver.set(DriverManager.getInstance().setDriver(browser));
         //driver.get("https://demowebshop.tricentis.com/");
-        new Environment(driver).openBrowser();
+        new Environment(driver.get()).openBrowser();
     }
 
     @AfterMethod(alwaysRun = true)
     public void closeDriver(){
-        if (driver != null){
-            driver.quit();
+        if (driver.get() != null){
+            driver.get().quit();
         }
+        driver.remove();
     }
 
     public WebDriver getDriver(){
-        return driver;
+        return driver.get();
     }
 
 }

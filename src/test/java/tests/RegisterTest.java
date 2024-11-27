@@ -14,7 +14,7 @@ public class RegisterTest extends BaseTest{
 
     @BeforeMethod
     public void setUpRegister(){
-        registerPage = new RegisterPage(driver);
+        registerPage = new RegisterPage(driver.get());
     }
 
 
