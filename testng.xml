@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite" parallel="methods" thread-count="6">
+    <test name="chrome">
+        <parameter name="browser" value="chrome"></parameter>
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="smoke"/>-->
+<!--                <include name="regression"/>-->
+<!--            </run>-->
+<!--        </groups>-->
+        <classes>
+            <class name="tests.LoginTest">
+                <parameter name="username" value="nekiUsername"></parameter>
+                <parameter name="password" value="nekiPassword"></parameter>
+            </class>
+            <class name="tests.RegisterTest"/>
+            <class name="tests.SeleniumActionsTest"/>
+        </classes>
+    </test>
+    <test name="firefox">
+        <parameter name="browser" value="firefox"></parameter>
+<!--        <groups>-->
+<!--            <run>-->
+<!--                <include name="smoke"/>-->
+<!--                <include name="regression"/>-->
+<!--            </run>-->
+<!--        </groups>-->
+        <classes>
+            <class name="tests.LoginTest">
+                <parameter name="username" value="nekiUsername"></parameter>
+                <parameter name="password" value="nekiPassword"></parameter>
+            </class>
+            <class name="tests.RegisterTest"/>
+            <class name="tests.SeleniumActionsTest"/>
+        </classes>
+    </test>
+</suite>
